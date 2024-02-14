@@ -1,19 +1,46 @@
-import {useState, Fragment} from 'react';
+import {useState, useReducer, Fragment} from 'react';
 import {bookables, sessions, days} from "../../static.json";
 import {FaArrowRight} from "react-icons/fa";
+import reducer from './reducer';
+
+const initialState = {
+  group: "Rooms",
+  bookableIndex: 0,
+  hasDetails: true,
+  bookables
+}
 
 export default function BookablesList () {
-  const [group, setGroup] = useState("Kit");
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {group, bookableIndex, bookables, hasDetails} = state;
   const bookablesInGroup = bookables.filter(b => b.group === group);
-  const [bookableIndex, setBookableIndex] = useState(0);
+  const bookable = bookablesInGroup[bookableIndex];
   const groups = [...new Set(bookables.map(b => b.group))];
 
-  const bookable = bookablesInGroup[bookableIndex];
+  function changeGroup (event) {
+    dispatch({
+      type: "SET_GROUP",
+      payload: event.target.value
+    })
+  }
 
-  const [hasDetails, setHasDetails] = useState(false);
+  function changeBookable (selectedIndex) {
+    dispatch({
+      type: "SET_BOOKABLE",
+      payload: selectedIndex
+    })
+  }
 
   function nextBookable () {
-    setBookableIndex(i => (i + 1) % bookablesInGroup.length);
+    dispatch({
+      type: "NEXT_BOOKABLE"
+    })
+  }
+
+  function toggleDetails () {
+    dispatch({
+      type: "TOGGLE_HAS_DETAILS"
+    })
   }
 
   return (
@@ -21,7 +48,7 @@ export default function BookablesList () {
       <div>
         <select
           value={group}
-          onChange={(e) => setGroup(e.target.value)}
+          onChange={(e) => changeGroup(e)}
         >
           {groups.map(g => <option value={g} key={g}>{g}</option>)}
         </select>
@@ -34,7 +61,7 @@ export default function BookablesList () {
             >
               <button
                 className="btn"
-                onClick={() => setBookableIndex(i)}
+                onClick={() => changeBookable(i)}
               >
                 {b.title}
               </button>
@@ -65,7 +92,7 @@ export default function BookablesList () {
                   <input
                     type="checkbox"
                     checked={hasDetails}
-                    onChange={() => setHasDetails(has => !has)}
+                    onChange={() => toggleDetails()}
                   />
                   Show Details
                 </label>
