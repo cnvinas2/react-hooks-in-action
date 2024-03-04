@@ -1,5 +1,5 @@
-import {useReducer, useEffect, useRef, Fragment} from 'react';
-import {sessions, days} from "../../static.json";
+import React, {useReducer, useEffect, Fragment, useRef} from 'react';
+import {bookables, sessions, days} from "../../static.json";
 import {FaArrowRight} from "react-icons/fa";
 import Spinner from "../UI/Spinner";
 import reducer from "./reducer";
@@ -25,6 +25,7 @@ export default function BookablesList () {
   const groups = [...new Set(bookables.map(b => b.group))];
 
   const timerRef = useRef(null);
+  const nextButtonRef = useRef(); 
 
   useEffect(() => {
     dispatch({type: "FETCH_BOOKABLES_REQUEST"});
@@ -51,6 +52,8 @@ export default function BookablesList () {
   }, []);
 
   function stopPresentation () {
+    console.log("el timer ref es", timerRef.current)
+
     clearInterval(timerRef.current);
   }
 
@@ -66,6 +69,7 @@ export default function BookablesList () {
       type: "SET_BOOKABLE",
       payload: selectedIndex
     });
+    nextButtonRef.current.focus(); 
   }
 
   function nextBookable () {
@@ -113,6 +117,7 @@ export default function BookablesList () {
           <button
             className="btn"
             onClick={nextBookable}
+            ref={nextButtonRef}
             autoFocus
           >
             <FaArrowRight/>
