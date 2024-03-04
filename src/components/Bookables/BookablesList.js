@@ -1,4 +1,4 @@
-import React, {useReducer, useEffect, Fragment, useRef} from 'react';
+import {useReducer, useEffect, Fragment, useRef} from 'react';
 import {bookables, sessions, days} from "../../static.json";
 import {FaArrowRight} from "react-icons/fa";
 import Spinner from "../UI/Spinner";
@@ -142,12 +142,6 @@ export default function BookablesList () {
                   />
                   Show Details
                 </label>
-                <button
-                  className="btn"
-                  onClick={stopPresentation}
-                >
-                  Stop
-                </button>
               </span>
             </div>
 
