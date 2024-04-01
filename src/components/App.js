@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,13 +14,11 @@ import BookingsPage from "./Bookings/BookingsPage";
 import UsersPage from "./Users/UsersPage";
 import UserPicker from "./Users/UserPicker";
 
-import UserContext from "./Users/UserContext";
+import {UserProvider} from "./Users/UserContext";
 
 export default function App () {
-  const [user, setUser] = useState();
-
   return (
-    <UserContext.Provider value={user}>
+    <UserProvider>
       <Router>
         <div className="App">
           <header>
@@ -48,7 +45,7 @@ export default function App () {
               </ul>
             </nav>
 
-            <UserPicker user={user} setUser={setUser}/>
+            <UserPicker/>
           </header>
 
           <Routes>
@@ -58,7 +55,7 @@ export default function App () {
           </Routes>
         </div>
       </Router>
-    </UserContext.Provider>
+    </UserProvider>
 
   );
 }

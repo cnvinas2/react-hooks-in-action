@@ -1,16 +1,23 @@
-import {useState} from "react"; // import useState
+import {useState, useContext} from "react";
 import UsersList from "./UsersList";
-import UserDetails from "./UserDetails"; // import new component
+import UserDetails from "./UserDetails";
+
+import UserContext from "./UserContext";
 
 export default function UsersPage () {
-  // manage selected user state
   const [user, setUser] = useState(null);
 
-  // pass user state down
+  // the value from context is now an object,
+  // so use destructuring to assign the user
+  // context property to the loggedInUser variable
+  const {user: loggedInUser} = useContext(UserContext);
+
+  const currentUser = user || loggedInUser;
+
   return (
     <main className="users-page">
-      <UsersList user={user} setUser={setUser}/>
-      <UserDetails user={user}/>
+      <UsersList user={currentUser} setUser={setUser}/>
+      <UserDetails user={currentUser}/>
     </main>
   );
 }
