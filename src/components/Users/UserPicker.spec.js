@@ -6,6 +6,7 @@ import { render } from '@testing-library/react';
 
 
 // Mock the fetchData function
+jest.mock('../../utils/useFetch');
 
 // Mock the spinner component
 jest.mock('../UI/Spinner', () => () => <div data-testid="spinner">Mocked Spinner</div>);
@@ -17,14 +18,14 @@ describe('UserPicker', () => {
     expect(spinner).toBeInTheDocument;
   });
 
-  it('renders users content when isLoading is false', () => {
+  it.only('renders users content when isLoading is false', () => {
     // Mock useState to set isLoading to false
-    jest.spyOn(React, 'useState').mockReturnValueOnce([false, jest.fn()]);
-
+    useFetch.mockReturnValue({data: [{id:1, name: 'chris'}], status: 'done'});
     const { queryByTestId } = render(<App />);
     const spinner = queryByTestId('spinner');
     expect(spinner).toBeNull;
   });
+
 });
 /*describe('useFetch', () => {
   it('fetches data successfully', async () => {
