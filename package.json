@@ -6,15 +6,23 @@
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.2.2",
+    "enzyme": "^3.11.0",
+    "extsprintf": "^1.4.1",
     "history": "^5.0.0",
+    "jest-fetch-mock": "^3.0.3",
     "react": "^17.0.1",
+    "react-async": "^10.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^3.11.0",
     "react-query": "^3.35.0",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,7 +46,14 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageReporters": [
+      "html"
+    ]
   }
 }

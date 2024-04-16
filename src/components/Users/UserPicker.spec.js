@@ -12,11 +12,20 @@ jest.mock('../../utils/useFetch');
 jest.mock('../UI/Spinner', () => () => <div data-testid="spinner">Mocked Spinner</div>);
 
 describe('UserPicker', () => {
-  it('renders spinner when isLoading is true', () => {
-    const { getByTestId } = render(<App />);
-    const spinner = getByTestId('spinner');
-    expect(spinner).toBeInTheDocument;
-  });
+  describe('Loading Status', () => {
+    it('renders spinner when network request is in progress', () => {
+      const { getByTestId } = render(<App />);
+      //todo 
+      //mock get data para retrasar el status del loading
+      //usefetch y getdata
+      const spinner = getByTestId('spinner');
+      expect(spinner).toBeInTheDocument;
+    });
+
+    /*it('renders spinner when network request is done', () => {
+      
+    });*/
+  })
 
   it.only('renders users content when isLoading is false', () => {
     // Mock useState to set isLoading to false
