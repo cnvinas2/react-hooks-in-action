@@ -27,7 +27,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --watch",
+    "test:cov": "jest --coverage",
     "eject": "react-scripts eject",
     "json-server": "json-server --watch db.json --port 3001"
   },
@@ -47,13 +48,20 @@
     ]
   },
   "jest": {
-    "collectCoverage": true,
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js}",
       "!<rootDir>/node_modules/"
     ],
     "coverageReporters": [
       "html"
+    ],
+    "reporters": [
+      "default",
+      ["jest-html-reporters", {
+        "publicPath": "./html-report",
+        "filename": "report.html",
+        "openReport": true
+      }]
     ]
   }
 }
