@@ -22,7 +22,8 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "eslint": "7.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -57,11 +58,14 @@
     ],
     "reporters": [
       "default",
-      ["jest-html-reporters", {
-        "publicPath": "./html-report",
-        "filename": "report.html",
-        "openReport": true
-      }]
+      [
+        "jest-html-reporters",
+        {
+          "publicPath": "./html-report",
+          "filename": "report.html",
+          "openReport": true
+        }
+      ]
     ]
   }
 }
