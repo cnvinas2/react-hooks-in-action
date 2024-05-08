@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Spinner from '../UI/Spinner'
 import { useUser } from './UserContext'
+
 import useFetch from '../../utils/useFetch'
 
 export default function UserPicker() {
@@ -27,12 +28,7 @@ export default function UserPicker() {
   }
 
   return (
-    <select
-      className="user-picker"
-      data-testId="user-picker"
-      onChange={handleSelect}
-      value={user?.id}
-    >
+    <select className="user-picker" onChange={handleSelect} value={user?.id}>
       {users.map((u) => (
         <option key={u.id} value={u.id}>
           {u.name}

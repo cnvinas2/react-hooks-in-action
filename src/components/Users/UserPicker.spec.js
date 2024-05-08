@@ -1,40 +1,54 @@
 /* eslint-disable react/display-name */
 /* eslint-disable no-undef */
-import '@testing-library/jest-dom'
 import React from 'react'
-import App from '../App'
-import { render, screen } from '@testing-library/react'
-import 'babel-polyfill'
+import { render, fireEvent } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import UserPicker from './UserPicker'
 
-// Mock the spinner component
-jest.mock('../UI/Spinner', () => () => (
-  <div data-testid="spinner">Mocked Spinner</div>
-))
+// Mocking the useUser hook
+jest.mock('./UserContext', () => ({
+  useUser: jest.fn(() => [null, jest.fn()]),
+}))
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () =>
-      Promise.resolve([
-        { id: 1, name: 'User 1' },
-        { id: 2, name: 'User 2' },
-      ]),
-  }),
+// Mocking the useFetch hook
+jest.mock('../../utils/useFetch', () =>
+  jest.fn(() => ({ data: [], status: 'loading' })),
 )
 
 describe('UserPicker', () => {
-  it('renders spinner when network request is in progress', () => {
-    const { getByTestId } = render(<App />)
+  it('renders loading spinner initially', async () => {
+    const { getByTestId } = render(<UserPicker />)
+    expect(getByTestId('spinner')).toBeInTheDocument()
+  })
 
-    expect(screen.queryByText('Loading...')).toBeNull()
-    expect(screen.getByText('User 1')).toBeInTheDocument()
+  it('renders error message if fetch fails', async () => {
+    jest.mock('../../utils/useFetch', () =>
+      jest.fn(() => ({ data: [], status: 'error' })),
+    )
+    const { getByText } = render(<UserPicker />)
+    expect(getByText('Error!')).toBeInTheDocument()
+  })
 
-    // select a different user
-    const selectElement = screen.getByTestId('user-picker')
-    userEvent.selectOptions(selectElement, '2')
+  it('renders user picker after loading', async () => {
+    jest.mock('../../utils/useFetch', () =>
+      jest.fn(() => ({ data: [{ id: 1, name: 'John' }], status: 'loaded' })),
+    )
+    const { getByTestId } = render(<UserPicker />)
+    expect(getByTestId('user-picker')).toBeInTheDocument()
+  })
 
-    expect(screen.getByText('User 2')).toBeInTheDocument()
-    //usefetch y getdata
-    const spinner = getByTestId('spinner')
-    expect(spinner).toBeInTheDocument
+  it('updates selected user on select change', async () => {
+    const users = [
+      { id: 1, name: 'John' },
+      { id: 2, name: 'Jane' },
+    ]
+    jest.mock('../../utils/useFetch', () =>
+      jest.fn(() => ({ data: users, status: 'loaded' })),
+    )
+    const { getByTestId } = render(<UserPicker />)
+    const selectElement = getByTestId('user-picker')
+
+    fireEvent.change(selectElement, { target: { value: '2' } })
+    expect(selectElement.value).toBe('2')
   })
 })
