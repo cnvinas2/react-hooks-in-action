@@ -1,26 +1,22 @@
-import {useReducer, useState} from "react";
-import {getWeek} from "../../utils/date-wrangler";
+import { useReducer, useState } from 'react'
+import { getWeek } from '../../utils/date-wrangler'
+import React from 'react'
 
-import WeekPicker from "./WeekPicker";
-import BookingsGrid from "./BookingsGrid";
-import BookingDetails from "./BookingDetails";
+import WeekPicker from './WeekPicker'
+import BookingsGrid from './BookingsGrid'
+import BookingDetails from './BookingDetails'
 
-import weekReducer from "./weekReducer";
+import weekReducer from './weekReducer'
 
-export default function Bookings ({bookable}) {
+export default function Bookings({ bookable }) {
+  const [week, dispatch] = useReducer(weekReducer, new Date(), getWeek)
 
-  const [week, dispatch] = useReducer(
-    weekReducer, new Date(), getWeek
-  );
-
-  const [booking, setBooking] = useState(null);
+  const [booking, setBooking] = useState(null)
 
   return (
     <div className="bookings">
       <div>
-        <WeekPicker
-          dispatch={dispatch}
-        />
+        <WeekPicker dispatch={dispatch} />
 
         <BookingsGrid
           week={week}
@@ -30,10 +26,7 @@ export default function Bookings ({bookable}) {
         />
       </div>
 
-      <BookingDetails
-        booking={booking}
-        bookable={bookable}
-      />
+      <BookingDetails booking={booking} bookable={bookable} />
     </div>
-  );
+  )
 }

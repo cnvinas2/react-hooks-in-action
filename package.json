@@ -4,7 +4,9 @@
   "version": "0.9.3",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.6",
+    "@babel/core": "^7.24.5",
+    "@babel/helper-define-polyfill-provider": "^0.6.2",
+    "@testing-library/jest-dom": "4.0.0",
     "@testing-library/react": "^11.2.2",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.2.2",
@@ -20,11 +22,14 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "prettier": "^3.2.5",
+    "jest": "26.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "eject": "react-scripts eject",
@@ -48,6 +53,18 @@
       "<rootDir>/src/**/*.{js}",
       "!<rootDir>/node_modules/"
     ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "verbose": true,
     "coverageReporters": [
       "html"
     ],
@@ -62,8 +79,14 @@
         }
       ]
     ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!(\\@adobe\\/css-tools)/)"
+    ],
     "moduleNameMapper": {
-      "\\.(css|less)$": "identity-obj-proxy"
+      "\\.(scss|sass|css)$": "identity-obj-proxy"
     }
   }
 }

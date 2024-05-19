@@ -1,4 +1,6 @@
-export default function UserDetails ({user}) {
+import React from 'react'
+
+export default function UserDetails({ user }) {
   return user ? (
     <div className="item user">
       <div className="item-header">
@@ -10,5 +12,5 @@ export default function UserDetails ({user}) {
         <p>{user.notes}</p>
       </div>
     </div>
-  ) : null;
+  ) : null
 }

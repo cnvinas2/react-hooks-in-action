@@ -1,9 +1,10 @@
-import BookablesView from "./BookablesView";
+import BookablesView from './BookablesView'
+import React from 'react'
 
-export default function BookablesPage () {
+export default function BookablesPage() {
   return (
     <main className="bookables-page">
-      <BookablesView/>
+      <BookablesView />
     </main>
-  );
+  )
 }
