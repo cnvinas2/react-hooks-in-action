@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import React from 'react'
+
 import '../App.css'
+import * as React from 'react';
 
 import { FaCalendarAlt, FaDoorOpen, FaUsers } from 'react-icons/fa'
 
@@ -12,6 +13,9 @@ import UserPicker from './Users/UserPicker'
 import { UserProvider } from './Users/UserContext'
 
 export default function App() {
+  function showalert() {
+    alert('agregado linter y prettier')
+  }
   return (
     <UserProvider>
       <Router>
@@ -19,6 +23,12 @@ export default function App() {
           <header>
             <nav>
               <ul>
+                <li>
+                  <Link onClick={showalert} className="btn btn-header">
+                    <FaCalendarAlt />
+                    <span>show alert</span>
+                  </Link>
+                </li>
                 <li>
                   <Link to="/bookings" className="btn btn-header">
                     <FaCalendarAlt />

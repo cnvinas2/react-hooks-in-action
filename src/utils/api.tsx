@@ -1,4 +1,4 @@
-import {shortISO} from "./date-wrangler";
+import {shortISO} from "./date-wrangler.tsx";
 
 export default function getData (url) {
   return fetch(url)

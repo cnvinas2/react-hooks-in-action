@@ -21,6 +21,7 @@
     "linebreak-style": "off",   
     "semi":  "off",
     "react/prop-types": "off"
+
   },
   "settings": {
     "react": {
