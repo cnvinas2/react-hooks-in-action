@@ -1,23 +1,28 @@
+import * as React from 'react';
 import {useEffect} from "react";
 import Spinner from "../UI/Spinner";
-import {useUser} from "./UserContext";
+import {useQuery} from "react-query"; // import useQuery
+import getData from "../../utils/api"; // import data-fetcher
 
-import useFetch from "../../utils/useFetch";
-
+import { useUser } from './UserContext';
+interface User {
+  id: number | string; // Adjust type based on your data
+  name: string;
+}
 export default function UserPicker () {
-  const [user, setUser] = useUser();
-
-  const {data: users = [], status} = useFetch(
-    "http://localhost:3001/users"
+  const [user, setUser] :any = useUser();
+  // switch from useFetch to useQuery
+  const {data: users = [], status}:any = useQuery(
+    "users",
+    () => getData("http://localhost:3001/users")
   );
-
   useEffect(() => {
     setUser(users[0]);
   }, [users, setUser]);
 
-  function handleSelect (e) {
+  function handleSelect (e:any) {
     const selectedID = parseInt(e.target.value, 10);
-    const selectedUser = users.find(u => u.id === selectedID);
+    const selectedUser = users.find((u:any) => u.id === selectedID);
     setUser(selectedUser);
   }
 
@@ -35,7 +40,7 @@ export default function UserPicker () {
       onChange={handleSelect}
       value={user?.id}
     >
-      {users.map(u => (
+      {users.map((u:any) => (
         <option key={u.id} value={u.id}>{u.name}</option>
       ))}
     </select>

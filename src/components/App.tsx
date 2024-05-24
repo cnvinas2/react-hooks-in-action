@@ -1,65 +1,76 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-
-import '../App.css'
 import * as React from 'react';
+import {lazy, Suspense, Fragment} from "react";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import "../App.css";
+import {FaCalendarAlt, FaDoorOpen, FaUsers} from "react-icons/fa";
+import PageSpinner from "./UI/PageSpinner";
+import {UserProvider} from "./Users/UserContext";
 
-import { FaCalendarAlt, FaDoorOpen, FaUsers } from 'react-icons/fa'
+import ErrorBoundary from "../ErrorBoundary";
 
-import BookablesPage from './Bookables/BookablesPage'
-import BookingsPage from './Bookings/BookingsPage'
-import UsersPage from './Users/UsersPage'
-import UserPicker from './Users/UserPicker'
+const BookablesPage = lazy(() => import("./Bookables/BookablesPage"));
+const BookingsPage = lazy(() => import("./Bookings/BookingsPage"));
+const UsersPage = lazy(() => import("./Users/UsersPage"));
 
-import { UserProvider } from './Users/UserContext'
+const queryClient = new QueryClient();
 
-export default function App() {
-  function showalert() {
-    alert('agregado linter y prettier')
-  }
+export default function App () {
   return (
-    <UserProvider>
-      <Router>
-        <div className="App">
-          <header>
-            <nav>
-              <ul>
-                <li>
-                  <Link onClick={showalert} className="btn btn-header">
-                    <FaCalendarAlt />
-                    <span>show alert</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/bookings" className="btn btn-header">
-                    <FaCalendarAlt />
-                    <span>Bookings</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/bookables" className="btn btn-header">
-                    <FaDoorOpen />
-                    <span>Bookables</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/users" className="btn btn-header">
-                    <FaUsers />
-                    <span>Users</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <Router>
+          <div className="App">
+            <header>
+              <nav>
+                <ul>
+                  <li>
+                    <Link to="/bookings" className="btn btn-header">
+                      <FaCalendarAlt/>
+                      <span>Bookings</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/bookables" className="btn btn-header">
+                      <FaDoorOpen/>
+                      <span>Bookables</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/users" className="btn btn-header">
+                      <FaUsers/>
+                      <span>Users</span>
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
 
-            <UserPicker />
-          </header>
+            </header>
 
-          <Routes>
-            <Route path="/bookings" element={<BookingsPage />} />
-            <Route path="/bookables" element={<BookablesPage />} />
-            <Route path="/users" element={<UsersPage />} />
-          </Routes>
-        </div>
-      </Router>
-    </UserProvider>
-  )
+            <ErrorBoundary
+              fallback={
+                <Fragment>
+                  <h1>Something went wrong!</h1>
+                  <p>Try reloading the page.</p>
+                </Fragment>
+              }
+            >
+              <Suspense fallback={<PageSpinner/>}>
+                <Routes>
+                  <Route path="/bookings" element={<BookingsPage/>}/>
+                  <Route path="/bookables/*" element={<BookablesPage/>}/>
+                  <Route path="/users" element={<UsersPage/>}/>
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+        </Router>
+      </UserProvider>
+    </QueryClientProvider>
+  );
 }

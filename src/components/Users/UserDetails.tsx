@@ -1,4 +1,6 @@
-export default function UserDetails ({user}) {
+import * as React from 'react';
+
+export default function UserDetails({ user }: UserDetailsProps) {
   return user ? (
     <div className="item user">
       <div className="item-header">
@@ -11,4 +13,12 @@ export default function UserDetails ({user}) {
       </div>
     </div>
   ) : null;
+}
+
+interface UserDetailsProps {
+  user: {
+    name: string;
+    title: string;
+    notes: string;
+  };
 }

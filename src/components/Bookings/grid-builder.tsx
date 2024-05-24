@@ -1,19 +1,20 @@
-import {sessions as sessionNames} from "../../static.json";
+import "../../static.json";
 import {addDays, shortISO} from "../../utils/date-wrangler";
 
-export function getGrid (bookable, startDate) {
+export function getGrid (bookable: any, startDate: any) {
 
   const dates = bookable.days.sort().map(
-    d => shortISO(addDays(startDate, d))
+    (d: any) => shortISO(addDays(startDate, d))
   );
 
-  const sessions = bookable.sessions.map(i => sessionNames[i]);
+  const sessions = bookable.sessions.map((i: any) => sessions[i]);
 
   const grid = {};
 
-  sessions.forEach(session => {
+  sessions.forEach((session: any) => {
+    let grid: any;
     grid[session] = {};
-    dates.forEach(date => grid[session][date] = {
+    dates.forEach((date: any) => grid[session][date] = {
       session,
       date,
       bookableId: bookable.id,
@@ -28,8 +29,8 @@ export function getGrid (bookable, startDate) {
   };
 }
 
-export function transformBookings (bookingsArray) {
-  return bookingsArray.reduce((bookings, booking) => {
+export function transformBookings (bookingsArray: any) {
+  return bookingsArray.reduce((bookings: any, booking: any) => {
 
     const {session, date} = booking;
 

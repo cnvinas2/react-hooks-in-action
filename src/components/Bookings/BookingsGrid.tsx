@@ -1,18 +1,17 @@
-import {Fragment} from "react";
+import React from 'react';
+import { Fragment } from 'react';
 import Spinner from "../UI/Spinner";
+import { useBookings, useGrid } from "./bookingsHooks";
 
-import {useBookings, useGrid} from "./bookingsHooks";
-
-export default function BookingsGrid (
-  {week, bookable, booking, setBooking}
-) {
-  const {bookings, status, error} = useBookings(
-    bookable?.id, week.start, week.end
+//chequear esto porqué no funciona
+export default function BookingsGrid({ week, bookable, booking, setBooking }: any) {
+  const { bookings, status, error } = useBookings(
+    bookable?.id, week?.start, week?.end
   );
 
-  const {grid, sessions, dates} = useGrid(bookable, week.start);
+  const { grid, sessions, dates }: any = useGrid(bookable, week?.start);
 
-  function cell (session, date) {
+  function cell(session: any, date: any) {
     const cellData = bookings?.[session]?.[date]
       || grid[session][date];
 
@@ -22,11 +21,11 @@ export default function BookingsGrid (
     return (
       <td
         key={date}
-        className={isSelected ? "selected" : null}
+        className={isSelected ? "selected" : undefined}
         onClick={
           status === "success"
             ? () => setBooking(cellData)
-            : null
+            : undefined
         }
       >
         {cellData.title}
@@ -35,7 +34,7 @@ export default function BookingsGrid (
   }
 
   if (!grid) {
-    return <p>Waiting for bookable and week details...</p>
+    return <p>Waiting for bookable and week details...</p>;
   }
 
   return (
@@ -56,10 +55,10 @@ export default function BookingsGrid (
         <tr>
           <th>
             <span className="status">
-              <Spinner/>
+              <Spinner />
             </span>
           </th>
-          {dates.map(d => (
+          {dates.map((d: any) => (
             <th key={d}>
               {(new Date(d)).toDateString()}
             </th>
@@ -68,14 +67,14 @@ export default function BookingsGrid (
         </thead>
 
         <tbody>
-        {sessions.map(session => (
+        {sessions.map((session: any) => (
           <tr key={session}>
             <th>{session}</th>
-            {dates.map(date => cell(session, date))}
+            {dates.map((date: any) => cell(session, date))}
           </tr>
         ))}
         </tbody>
       </table>
     </Fragment>
-  )
+  );
 }

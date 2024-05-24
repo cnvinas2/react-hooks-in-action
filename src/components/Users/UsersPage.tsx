@@ -6,7 +6,7 @@ import {useUser} from "./UserContext"; // import custom hook
 export default function UsersPage () {
   const [user, setUser] = useState(null);
   const [loggedInUser] = useUser(); // use custom hook
-  const currentUser = user || loggedInUser;
+  const currentUser:any= user || loggedInUser;
 
   return (
     <main className="users-page">

@@ -1,7 +1,10 @@
 import {useState} from "react";
-import {days, sessions} from "../../static.json";
+import {Link} from "react-router-dom";
+import data from "../../static.json";
+import {FaEdit} from "react-icons/fa";
+import React from 'react';
 
-export default function BookableDetails ({bookable}) {
+export default function BookableDetails ({bookable}:any) {
   const [hasDetails, setHasDetails] = useState(true);
 
   function toggleDetails () {
@@ -21,6 +24,14 @@ export default function BookableDetails ({bookable}) {
             />
             Show Details
           </label>
+          <Link
+            to={`/bookables/${bookable.id}/edit`}
+            replace={true}
+            className="btn btn-header"
+          >
+            <FaEdit/>
+            <span>Edit</span>
+          </Link>
         </span>
       </div>
 
@@ -33,12 +44,12 @@ export default function BookableDetails ({bookable}) {
             <ul>
               {bookable.days
                 .sort()
-                .map(d => <li key={d}>{days[d]}</li>)
+                .map((d:any) => <li key={d}>{data.days[d]}</li>)
               }
             </ul>
             <ul>
               {bookable.sessions
-                .map(s => <li key={s}>{sessions[s]}</li>)
+                .map((s:any) => <li key={s}>{data.sessions[s]}</li>)
               }
             </ul>
           </div>

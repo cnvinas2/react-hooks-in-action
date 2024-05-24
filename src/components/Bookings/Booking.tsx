@@ -1,8 +1,8 @@
-import {Fragment} from "react";
+import React from 'react';
+import { Fragment } from 'react';
 
-export default function Booking ({booking, bookable}) {
-
-  const {title, date, session, notes} = booking;
+export default function Booking({ booking, bookable }: BookingProps) {
+  const { title, date, session, notes } = booking;
 
   return (
     <div className="booking-details-fields">
@@ -25,5 +25,10 @@ export default function Booking ({booking, bookable}) {
         </Fragment>
       )}
     </div>
-  )
+  );
+}
+
+interface BookingProps {
+  booking:any;
+  bookable:any;
 }
