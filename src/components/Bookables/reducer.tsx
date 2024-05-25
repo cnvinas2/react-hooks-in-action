@@ -1,4 +1,4 @@
-export default function reducer (state:any, action:any) {
+export default function reducer (state: any, action: any) {
   switch (action.type) {
     case "SET_GROUP":
       return {
@@ -13,12 +13,13 @@ export default function reducer (state:any, action:any) {
         bookableIndex: action.payload
       };
 
-    case "NEXT_BOOKABLE":
-      const count = state.bookables.filter((b:any) => b.group === state.group).length;
+    case "NEXT_BOOKABLE": {
+      const count = state.bookables.filter((b: any) => b.group === state.group).length;
       return {
         ...state,
         bookableIndex: (state.bookableIndex + 1) % count
       };
+    }
 
     case "FETCH_BOOKABLES_REQUEST":
       return {

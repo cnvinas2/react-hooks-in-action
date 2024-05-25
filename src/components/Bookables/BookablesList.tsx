@@ -1,48 +1,76 @@
-
-import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useRef} from 'react';
 import {FaArrowRight} from "react-icons/fa";
-import React from 'react';
+import Spinner from "../UI/Spinner";
+import getData from "../../utils/api";
 
-export default function BookablesList ({bookable, bookables, getUrl}:any) {
-  const group = bookable?.group;
-  const bookablesInGroup = bookables?.filter((b:any) => b.group === group);
-  const groups = [...new Set(bookables?.map((b:any) => b.group))];
+export default function BookablesList ({state, dispatch}: any) {
+  const {group, bookableIndex, bookables}: any = state;
+  const {isLoading, error}: any = state;
 
-  const navigate = useNavigate();
+  const bookablesInGroup = bookables.filter((b: any )=> b.group === group);
+  const groups = [...new Set(bookables.map((b : any)=> b.group))];
 
-  function changeGroup (event:any) {
-    const bookablesInSelectedGroup = bookables.filter(
-      (b:any) => b.group === event.target.value
-    );
-    navigate(getUrl(bookablesInSelectedGroup[0].id));
+  const nextButtonRef: any = useRef();
+
+  useEffect(() => {
+    dispatch({type: "FETCH_BOOKABLES_REQUEST"});
+
+    getData("http://localhost:3001/bookables")
+      .then(bookables => dispatch({
+        type: "FETCH_BOOKABLES_SUCCESS",
+        payload: bookables
+      }))
+      .catch(error => dispatch({
+        type: "FETCH_BOOKABLES_ERROR",
+        payload: error
+      }));
+  }, [dispatch]);
+
+  function changeGroup (e: any) {
+    dispatch({
+      type: "SET_GROUP",
+      payload: e.target.value
+    });
+  }
+
+  function changeBookable (selectedIndex: any) {
+    dispatch({
+      type: "SET_BOOKABLE",
+      payload: selectedIndex
+    });
+    nextButtonRef.current.focus();
   }
 
   function nextBookable () {
-    const i = bookablesInGroup.indexOf(bookable);
-    const nextIndex = (i + 1) % bookablesInGroup.length;
-    const nextBookable = bookablesInGroup[nextIndex];
-    navigate(getUrl(nextBookable.id));
+    dispatch({type: "NEXT_BOOKABLE"});
+  }
+
+  if (error) {
+    return <p>{error.message}</p>
+  }
+
+  if (isLoading) {
+    return <p><Spinner/> Loading bookables...</p>
   }
 
   return (
     <div>
       <select value={group} onChange={changeGroup}>
-        {groups.map((g:any) => <option value={g} key={g}>{g}</option>)}
+        {groups.map((g: any) => <option value={g} key={g}>{g}</option>)}
       </select>
 
       <ul className="bookables items-list-nav">
-        {bookablesInGroup.map((b:any) => (
+        {bookablesInGroup.map((b: any, i: any) => (
           <li
             key={b.id}
-            className={b.id === bookable.id ? "selected" : undefined}
+            className={i === bookableIndex ? "selected" : undefined}
           >
-            <Link
-              to={getUrl(b.id)}
+            <button
               className="btn"
-              replace={true}
+              onClick={() => changeBookable(i)}
             >
               {b.title}
-            </Link>
+            </button>
           </li>
         ))}
       </ul>
@@ -50,6 +78,7 @@ export default function BookablesList ({bookable, bookables, getUrl}:any) {
         <button
           className="btn"
           onClick={nextBookable}
+          ref={nextButtonRef}
           autoFocus
         >
           <FaArrowRight/>
