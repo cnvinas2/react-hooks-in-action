@@ -26,10 +26,3 @@ export default function UsersList ({user, setUser}:any) {
     </ul>
   );
 }
-interface UsersListProps {
-  user:{
-    id:  number | string;
-    name: string;
-  };
-  setUser: () => void;
-}

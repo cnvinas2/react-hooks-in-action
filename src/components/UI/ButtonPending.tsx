@@ -1,4 +1,4 @@
-import React, { useState, useTransition } from 'react';
+import React, { useTransition } from 'react';
 import Spinner from "./Spinner";
 
 interface ButtonPendingProps {

@@ -35,5 +35,5 @@ interface BookingDetailsProps {
   booking: {
     bookerId: number | string;
   };
-  bookable: Object;
+  bookable: any;
 }

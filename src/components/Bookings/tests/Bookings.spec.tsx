@@ -7,11 +7,11 @@ describe('Booking Component', () => {
     title: 'Meeting with Bob',
     date: '2024-05-25T14:00:00Z',
     session: 'Afternoon',
-    notes: 'Discuss project details',
+    notes: 'Discuss project details'
   };
 
   const bookable = {
-    title: 'Conference Room 1',
+    title: 'Conference Room 1'
   };
 
   test('renders booking details correctly', () => {

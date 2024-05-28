@@ -6,7 +6,7 @@ import useFormState from '../../Bookables/useFormState';
 // Mock the custom hook
 jest.mock('../../Bookables/useFormState', () => ({
   __esModule: true,
-  default: jest.fn(),
+  default: jest.fn()
 }));
 
 describe('BookingForm Component', () => {
@@ -15,11 +15,11 @@ describe('BookingForm Component', () => {
     title: 'Meeting with Bob',
     date: '2024-05-25T14:00:00Z',
     session: 'Afternoon',
-    notes: 'Discuss project details',
+    notes: 'Discuss project details'
   };
 
   const bookable = {
-    title: 'Conference Room 1',
+    title: 'Conference Room 1'
   };
 
   const mockHandleChange = jest.fn();
@@ -31,7 +31,7 @@ describe('BookingForm Component', () => {
   beforeEach(() => {
     mockUseFormState.mockReturnValue({
       state: booking,
-      handleChange: mockHandleChange,
+      handleChange: mockHandleChange
     });
   });
 
@@ -63,7 +63,7 @@ describe('BookingForm Component', () => {
     const newBooking = { ...booking, id: undefined };
     mockUseFormState.mockReturnValue({
       state: newBooking,
-      handleChange: mockHandleChange,
+      handleChange: mockHandleChange
     });
 
     const { queryByText } = render(

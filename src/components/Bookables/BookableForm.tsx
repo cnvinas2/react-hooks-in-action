@@ -3,7 +3,6 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import {FaCloudUploadAlt, FaTrash, FaWindowClose} from "react-icons/fa";
 
-import {days, sessions} from "../../static.json";
 
 export default function BookableForm ({formState = {}, handleSubmit, handleDelete}: any) {
   const {state = {}, handleChange, handleChecked} = formState;

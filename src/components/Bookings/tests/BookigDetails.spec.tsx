@@ -5,7 +5,7 @@ import { useUser } from '../../Users/UserContext';
 
 // Mock the custom hook
 jest.mock('../../Users/UserContext', () => ({
-    useUser: jest.fn(),
+    useUser: jest.fn()
   }));
   
   describe('BookingDetails Component', () => {
@@ -14,11 +14,11 @@ jest.mock('../../Users/UserContext', () => ({
       title: 'Meeting with Bob',
       date: '2024-05-25T14:00:00Z',
       session: 'Afternoon',
-      notes: 'Discuss project details',
+      notes: 'Discuss project details'
     };
   
     const bookable = {
-      title: 'Conference Room 1',
+      title: 'Conference Room 1'
     };
   
     const mockUser = { id: 1, name: 'Alice' };

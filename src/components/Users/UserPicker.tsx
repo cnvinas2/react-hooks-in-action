@@ -5,10 +5,7 @@ import {useQuery} from "react-query"; // import useQuery
 import getData from "../../utils/api"; // import data-fetcher
 
 import { useUser } from './UserContext';
-interface User {
-  id: number | string; // Adjust type based on your data
-  name: string;
-}
+
 export default function UserPicker () {
   const [user, setUser] :any = useUser();
   // switch from useFetch to useQuery
