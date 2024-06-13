@@ -68,7 +68,7 @@ export function useBookingsParams () {
   };
 }
 
-export function useCreateBooking (key: any) {
+export function useCreateBooking (key: any) : any {
   const queryClient = useQueryClient();
   const mutation = useMutation(
     item => createItem("http://localhost:3001/bookings", item),
@@ -108,7 +108,7 @@ export function useUpdateBooking (key: any) {
   };
 }
 
-export function useDeleteBooking (key: any) {
+export function useDeleteBooking (key: any) : any{
   const queryClient = useQueryClient();
   const mutation = useMutation(
     id => deleteItem(`http://localhost:3001/bookings/${id}`),

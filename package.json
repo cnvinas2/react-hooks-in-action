@@ -1,8 +1,20 @@
 {
-  "name": "Chris-have-huge-balls-hooks",
+  "name": "I-have-huge-balls-for-doing-this",
   "description": "A bookings app example to accompany React Hooks in Action",
   "version": "0.9.3",
   "private": true,
+  "scripts": {
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "react-scripts build",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "eject": "react-scripts eject",
+    "json-server": "json-server --watch db.json --port 3001",
+    "tsc": "tsc"
+  },
   "dependencies": {
     "@babel/core": "^7.24.5",
     "@babel/helper-define-polyfill-provider": "^0.6.2",
@@ -48,18 +60,7 @@
     "typescript": "^4.9.5",
     "typescript-eslint": "^7.11.0"
   },
-  "scripts": {
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
-    "build": "react-scripts build",
-    "lint": "eslint \"**/*.{ts,tsx}\"",
-    "lint:fix": "eslint \"**/*.{ts,tsx}\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "eject": "react-scripts eject",
-    "json-server": "json-server --watch db.json --port 3001",
-    "tsc": "tsc"
-  },
+
   "browserslist": {
     "production": [
       ">0.2%",
