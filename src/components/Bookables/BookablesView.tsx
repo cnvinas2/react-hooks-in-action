@@ -1,30 +1,51 @@
-import React, {useReducer, Fragment} from "react";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
+import { useQuery } from "react-query";
 
+import getData from "../../utils/api";
 import BookablesList from "./BookablesList";
 import BookableDetails from "./BookableDetails";
 
-import reducer from "./reducer";
+interface Bookable {
+  id: number;
+  title: string;
+  group: string;
+  notes: string;
+  days: number[];
+  sessions: number[];
+}
 
-const initialState = {
-  group: "Rooms",
-  bookableIndex: 0,
-  bookables: [],
-  isLoading: false,
-  error: false
-};
-
-export default function BookablesView () {
-  const [state, dispatch]= useReducer(reducer, initialState);
-
-  const bookablesInGroup = state.bookables.filter(
-    (b:any) => b.group === state.group
+export default function BookablesView() {
+  const { data: bookables = [] }:any = useQuery<Bookable[]>(
+    "bookables",
+    () => getData("http://localhost:3001/bookables"),
+    {
+      suspense: true
+    }
   );
-  const bookable = bookablesInGroup[state.bookableIndex];
+
+  const { id }: any = useParams<{ id: string }>();
+  const bookable = bookables.find((b:any ) => b.id === parseInt(id, 10)) || bookables[0];
 
   return (
-    <Fragment>
-      <BookablesList state={state} dispatch={dispatch}/>
-      <BookableDetails bookable={bookable}/>
-    </Fragment>
+    <main className="bookables-page">
+      <div>
+        <BookablesList
+          bookable={bookable}
+          bookables={bookables}
+          getUrl={(id) => `/bookables/${id}`}
+        />
+
+        <p className="controls">
+          <Link to="/bookables/new" replace className="btn">
+            <FaPlus />
+            <span>New</span>
+          </Link>
+        </p>
+      </div>
+
+      <BookableDetails bookable={bookable} />
+    </main>
   );
 }

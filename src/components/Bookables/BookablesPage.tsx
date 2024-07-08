@@ -1,10 +1,25 @@
-import React from "react";
-import BookablesView from "./BookablesView";
+import {lazy} from "react";
+import {Routes, Route} from "react-router-dom";
 
-export default function BookablesPage() {
+const BookablesView = lazy(() => import("./BookablesView"));
+const BookableEdit = lazy(() => import("./BookableEdit"));
+const BookableNew = lazy(() => import("./BookableNew"));
+
+export default function BookablesPage () {
   return (
-    <main className="bookables-page">
-      <BookablesView/>
-    </main>
+    <Routes>
+      <Route path="/:id">
+        <BookablesView/>
+      </Route>
+      <Route path="/">
+        <BookablesView/>
+      </Route>
+      <Route path="/:id/edit">
+        <BookableEdit/>
+      </Route>
+      <Route path="/new">
+        <BookableNew/>
+      </Route>
+    </Routes>
   );
 }

@@ -20,13 +20,13 @@ export default function useFetch(url: string): FetchState {
     setError(null);
 
     api(url)
-      .then(data => {
+      .then((data:any) => {
         if (doUpdate) {
           setData(data);
           setStatus('success');
         }
       })
-      .catch(error => {
+      .catch((error:any) => {
         if (doUpdate) {
           setError(error);
           setStatus('error');

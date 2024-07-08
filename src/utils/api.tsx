@@ -1,6 +1,6 @@
 import {shortISO} from "./date-wrangler";
 
-export default function getData (url:any, delay = 0) {
+export default function getData (url:any, delay = 0):any{
   return fetch(url)
     .then(resp => {
       if (!resp.ok) {
